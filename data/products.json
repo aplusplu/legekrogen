@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Farverigt legetelt",
+    "price": 499,
+    "description": "Et lille hyggeligt telt til børn, perfekt til leg og fantasi.",
+    "image": "https://example.com/legetelt.jpg"
+  },
+  {
+    "name": "Byggesæt med klodser",
+    "price": 299,
+    "description": "Kreativt byggesæt til børn i alle aldre, fremmer motorik og fantasi.",
+    "image": "https://example.com/klodser.jpg"
+  },
+  {
+    "name": "Måneformet gynge",
+    "price": 799,
+    "description": "Sikker og sjov gynge til børn, kan hænges både indendørs og udendørs.",
+    "image": "https://example.com/gynge.jpg"
+  }
+]
