@@ -1,12 +1,67 @@
 <!doctype html>
-<html lang="en">
+<html lang="ro">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <title>Legekrogen • Magazin de jucării</title>
+    <meta
+      name="description"
+      content="Legekrogen – Descoperă jucării creative pentru copii. Rapid, modern, ușor de folosit."
+    />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>legekrogen</title>
+    <link rel="apple-touch-icon" href="/vite.svg" />
+
+    <!-- Theme color (adaptează-se la dark/light) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f1115" />
+
+    <!-- Color scheme hint for browsers -->
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Legekrogen • Magazin de jucării" />
+    <meta property="og:description" content="Jucării pentru imaginație și joacă." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="/vite.svg" />
+
+    <!-- Performance: preconnect fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- MUI recommended font (Roboto) + optional display swap -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Small baseline CSS to make initial paint nicer -->
+    <style>
+      :root { --bg-light:#f7f7fb; --bg-dark:#0f1115; }
+      html, body, #root { height: 100%; }
+      body {
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
+          Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+        background: var(--bg-light);
+      }
+      @media (prefers-color-scheme: dark) {
+        body { background: var(--bg-dark); }
+      }
+    </style>
   </head>
+
   <body>
+    <noscript>Ai nevoie de JavaScript pentru a folosi această aplicație.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
