@@ -20,7 +20,13 @@ import ProductCard from "./components/ProductCard.jsx";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 console.log("API_URL =", API_URL);
 
-export default function App() {
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * App component - the main component of the application.
+ * It fetches products from the backend, provides a search functionality,
+ * and renders a list of products.
+ *
+/*******  57453d1e-4f5a-4a74-934f-fb82976d6039  *******/export default function App() {
   const [mode, setMode] = useState(
     window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -96,12 +102,12 @@ export default function App() {
               }}
             >
               <Typography variant="h4" sx={{ fontWeight: 800, flexGrow: 1 }}>
-                Produse
+                Products
               </Typography>
 
               <TextField
                 size="medium"
-                placeholder="Caută produse…"
+                placeholder="search products…"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 InputProps={{
@@ -122,11 +128,11 @@ export default function App() {
             ) : filtered.length === 0 ? (
               <Box sx={{ py: 6, textAlign: "center" }}>
                 <Typography variant="h6" gutterBottom>
-                  Niciun rezultat
+                  No result
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Încearcă alt termen de căutare sau verifică dacă backendul
-                  rulează.
+                  try another term or see if backend works
+
                 </Typography>
               </Box>
             ) : (
@@ -153,7 +159,7 @@ export default function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme={mode} // se sincronizează cu dark/light
+        theme={mode} t
       />
     </ThemeProvider>
   );
