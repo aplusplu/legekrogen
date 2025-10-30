@@ -3,58 +3,50 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   TextField,
+  DialogActions,
   Button,
 } from "@mui/material";
+import { useAuth } from "../context/AuthContext.jsx";
 import { toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
 
 export default function LoginDialog({ open, onClose }) {
   const { login } = useAuth();
   const [email, setEmail] = useState("admin@mediacollege.dk");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("admin123");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      toast.success("Autentificare reușită");
-      onClose?.();
-    } catch (err) {
-      toast.error(err.message || "Login eșuat");
+  const handleSubmit = async () => {
+    const res = await login(email, password);
+    if (res.status === "ok") {
+      toast.success("✅ Logat cu succes!");
+      onClose();
+    } else {
+      toast.error(res.message || "❌ Login failed");
     }
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle>Login</DialogTitle>
-      <form onSubmit={handleSubmit}>
-        <DialogContent>
-          <TextField
-            label="Email"
-            type="email"
-            fullWidth
-            margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label="Parolă"
-            type="password"
-            fullWidth
-            margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>Anulează</Button>
-          <Button type="submit" variant="contained">
-            Intră
-          </Button>
-        </DialogActions>
-      </form>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Autentificare</DialogTitle>
+      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <TextField
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="Parolă"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Anulează</Button>
+        <Button onClick={handleSubmit} variant="contained">
+          Login
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

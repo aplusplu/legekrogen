@@ -1,3 +1,4 @@
+// sites/www/legekrogen/src/App.jsx
 import { useEffect, useMemo, useState, useCallback } from "react";
 import {
   ThemeProvider,
@@ -17,16 +18,11 @@ import { getTheme } from "./theme";
 import Layout from "./components/Layout.jsx";
 import ProductCard from "./components/ProductCard.jsx";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-console.log("API_URL =", API_URL);
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * App component - the main component of the application.
- * It fetches products from the backend, provides a search functionality,
- * and renders a list of products.
- *
-/*******  57453d1e-4f5a-4a74-934f-fb82976d6039  *******/export default function App() {
+/* --- Componenta care folosește contextul (are useAuth) --- */
+function AppContent() {
+  // Dark/Light mode
   const [mode, setMode] = useState(
     window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -39,23 +35,32 @@ console.log("API_URL =", API_URL);
     []
   );
 
+  // Auth
+  const { user } = useAuth();
+  const [forceLogin, setForceLogin] = useState(true);
+
+  // 👉 Forțează deschiderea dialogului de Login la primul load, dacă nu există user
+  useEffect(() => {
+    if (!user && forceLogin) {
+      window.dispatchEvent(new Event("open-login")); // Layout ascultă acest eveniment
+      setForceLogin(false); // doar o dată
+    }
+  }, [user, forceLogin]);
+
+  // Products
   const [products, setProducts] = useState([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch products
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/api/products`);
+        const res = await fetch(`/api/products`); // merge prin proxy Vite
         if (!res.ok) throw new Error(`Server responded ${res.status}`);
         const data = await res.json();
-        if (mounted) {
-          setProducts(Array.isArray(data) ? data : []);
-          toast.success(`Am încărcat ${data.length} produse`);
-        }
+        if (mounted) setProducts(Array.isArray(data) ? data : []);
       } catch (err) {
         toast.error(`Eroare la încărcare: ${err.message}`);
       } finally {
@@ -132,7 +137,6 @@ console.log("API_URL =", API_URL);
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   try another term or see if backend works
-
                 </Typography>
               </Box>
             ) : (
@@ -148,19 +152,16 @@ console.log("API_URL =", API_URL);
         </Box>
       </Layout>
 
-      {/* Toastify container */}
-      <ToastContainer
-        position="bottom-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={mode} t
-      />
+      <ToastContainer position="bottom-right" autoClose={2500} theme={mode} />
     </ThemeProvider>
+  );
+}
+
+/* --- Rădăcina care furnizează AuthContext --- */
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
